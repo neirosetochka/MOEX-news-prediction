@@ -1,18 +1,19 @@
 import os
 import sys
-import traceback
+
 
 import uvicorn
-from fastapi import FastAPI, Request, status
+from fastapi import FastAPI, Request
 from fastapi.logger import logger
-from fastapi.encoders import jsonable_encoder
-from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 
 
-from schema import *
+from model import Model
+from predict import predict
+from config import CONFIG
+from exception_handler import validation_exception_handler, python_exception_handler
+from schema import InferenceResponse, InferenceInput, InferenceOutput, ErrorResponse
 
 app = FastAPI(
     title="ML Model",
@@ -23,8 +24,42 @@ app = FastAPI(
     license_info=None,
 )
 
-app.add_middleware(CORSMiddleware, allow_origins=["*"])
-# app.mount("/static", StaticFiles(directory="static/"), name="static") i add nginx to serve static files
+# TODO change
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# TODO add frontend and nginx
+
+
+app.add_exception_handler(RequestValidationError, validation_exception_handler)
+app.add_exception_handler(Exception, python_exception_handler)
+
+
+@app.on_event("startup")
+async def startup_event():
+    """
+    Initialize FastAPI and add variables
+    """
+
+    logger.info("Running envirnoment: {}".format(CONFIG["ENV"]))
+
+    # Initialize the pytorch model
+    model = Model()
+
+    # add model and other preprocess tools too app state
+    app.package = {"model": model}
 
 
 @app.post(
@@ -37,20 +72,30 @@ def do_predict(request: Request, body: InferenceInput):
     Perform prediction on input data
     """
 
-    # run model inference
-    y = str(body)
+    logger.info("API predict called")
+    logger.info(f"input: {body}")
 
+    # prepare input data
+    X = body
+
+    # run model inference
+    y = predict(app.package, [X])
     # generate prediction based on probablity
+    pred = ["setosa", "versicolor", "virginica"][y.index(max(y))]
 
     # round probablities for json
+    y = list(map(lambda v: round(v, CONFIG["ROUND_DIGIT"]), y))
 
     # prepare json for returning
+
+    logger.info(f"results: {y}")
+
     return InferenceResponse(
         data=InferenceOutput(
-            predicted_value=1,
-            predicted_confidence_interval_lower_bound=2,
-            predicted_confidence_interval_upper_bound=3,
-            text=y,
+            predicted_value=y[0],
+            predicted_confidence_interval_lower_bound=y[1],
+            predicted_confidence_interval_upper_bound=y[2],
+            text=pred,
         )
     )
 
@@ -65,15 +110,13 @@ def show_about():
         output = os.popen(command).read()
         return output
 
-    return {"test"}
+    return {
+        "sys.version": sys.version,
+        "aaaaa": bash("uname -a"),
+    }
 
 
 if __name__ == "__main__":
-    # server api
     uvicorn.run(
-        "main:app",
-        host="0.0.0.0",
-        port=8080,
-        reload=True,
-        # log_config="log.ini",
+        "main:app", host="0.0.0.0", port=8080, reload=True, log_config="log.ini"
     )
