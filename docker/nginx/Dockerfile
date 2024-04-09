@@ -4,11 +4,11 @@ FROM node:latest as build
 
 WORKDIR /usr/src/app
 
-COPY ./frontend/package.json ./frontend/package-lock.json /usr/src/app/
-
-RUN npm install
+#COPY ./frontend/package.json ./frontend/package-lock.json /usr/src/app/
 
 COPY ./frontend .
+RUN npm install
+
 RUN npm run build
 
 
