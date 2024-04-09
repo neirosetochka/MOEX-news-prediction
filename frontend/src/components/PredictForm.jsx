@@ -1,17 +1,19 @@
 import { useState } from "react"
-import { Button, Row, Form, InputGroup } from 'react-bootstrap'
-import { HttpMethod } from "@data/enums"
-import Fetch from "@API/Fetch"
+import { Button, Form, InputGroup } from "react-bootstrap"
 
 export default function PredictForm({ func }) {
 
     var [date, setDate] = useState(undefined)
 
+    async function callFunc(event) {
+        await event.preventDefault()
+        var date_obj = Date.parse(date)
+        return await func(date_obj)
+    }
 
     return (
-
         <>
-            <Form onSubmit={(e) => func(e)}>
+            <Form onSubmit={e => callFunc(e)}>
                 <Form.Group className="mb-3" controlId="formGroupEmail">
                     <InputGroup className="mb-3">
                         <Form.Control
@@ -29,6 +31,5 @@ export default function PredictForm({ func }) {
                 </Form.Group>
             </Form>
         </>
-
     )
 }

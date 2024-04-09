@@ -1,8 +1,8 @@
 import "./styles/App.css"
-import 'bootstrap/dist/css/bootstrap.min.css'
+import "bootstrap/dist/css/bootstrap.min.css"
 
 import { useState } from "react"
-import { Button, Row } from 'react-bootstrap'
+import { Row } from "react-bootstrap"
 import { HttpMethod } from "@data/enums"
 import Fetch from "@API/Fetch"
 import PredictForm from "components/PredictForm"
@@ -11,12 +11,11 @@ export default function App() {
 
     var [predict, setPredict] = useState(0)
 
-    async function getPredict(event) {
+    async function getPredict(date) {
 
-        event.preventDefault()
-        console.log(event.target.value)
+        console.log(date)
 
-        var data = await Fetch({ action: `api/predict/`, method: HttpMethod.GET })
+        var data = await Fetch({ action: "api/v1/predict/", method: HttpMethod.GET })
 
         if (data && data.ok) {
             // console.log(data)
