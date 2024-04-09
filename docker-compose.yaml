@@ -24,7 +24,7 @@ services:
     container_name: "web"
     build:
       context: .
-      dockerfile: ./docker/node/Dockerfile
+      dockerfile: ./docker/frontend/Dockerfile
     ports:
       - 3000:3000
 
