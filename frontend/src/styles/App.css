@@ -14,6 +14,10 @@ body {
     font-size: x-large;
 }
 
+.text-center {
+    text-align: center;
+}
+
 .green {
     background-color: rgb(129, 235, 165);
     border: 3px solid rgb(78, 215, 124);

@@ -2,19 +2,24 @@ import "./styles/App.css"
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import { useState } from "react"
-import { Button, Row, Form } from 'react-bootstrap'
+import { Button, Row } from 'react-bootstrap'
 import { HttpMethod } from "@data/enums"
 import Fetch from "@API/Fetch"
+import PredictForm from "components/PredictForm"
 
 export default function App() {
 
     var [predict, setPredict] = useState(0)
 
-    async function getPredict() {
+    async function getPredict(event) {
+
+        event.preventDefault()
+        console.log(event.target.value)
+
         var data = await Fetch({ action: `api/predict/`, method: HttpMethod.GET })
 
         if (data && data.ok) {
-            console.log(data)
+            // console.log(data)
             setPredict(data.predict)
         }
         setPredict(Math.random())
@@ -23,14 +28,10 @@ export default function App() {
     return (
         <div className="App">
             <br />
-            <h2>Сгенерить предикт на следующий день</h2>
+            <h2 className="text-center">Сгенерить предикт на следующий день</h2>
             <br />
 
-            <Form.Control type="date" />
-
-            <br />
-
-            <Button onClick={getPredict}>клик</Button>
+            <PredictForm func={getPredict} />
 
             <br />
             <br />
