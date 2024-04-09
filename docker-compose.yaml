@@ -20,12 +20,4 @@ services:
       - 80:80
     depends_on:
       - docker-fastapi
-  web:
-    container_name: "web"
-    build:
-      context: .
-      dockerfile: ./docker/frontend/Dockerfile
-    ports:
-      - 3000:3000
-
 
