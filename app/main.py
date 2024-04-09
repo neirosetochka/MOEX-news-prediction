@@ -1,13 +1,11 @@
 import os
 import sys
 
-
 import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.logger import logger
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-
 
 from model import Model
 from predict import predict
@@ -22,6 +20,10 @@ app = FastAPI(
     terms_of_service=None,
     contact=None,
     license_info=None,
+    docs_url='/api/docs',
+    redoc_url='/api/redoc',
+    openapi_url='/api/openapi.json'
+
 )
 
 # TODO change
