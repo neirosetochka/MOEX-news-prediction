@@ -7,6 +7,11 @@ const chalk = require('react-dev-utils/chalk');
 const resolve = require('resolve');
 
 /**
+ * converts "src/components/*" to "src/components"
+ */
+const removeWildcardPart = p => p.replace('/*', '');
+
+/**
  * Get additional module paths based on the baseUrl of a compilerOptions object.
  *
  * @param {Object} options
@@ -44,7 +49,7 @@ function getAdditionalModulePaths(options = {}) {
   throw new Error(
     chalk.red.bold(
       "Your project's `baseUrl` can only be set to `src` or `node_modules`." +
-        ' Create React App does not support other values at this time.'
+      ' Create React App does not support other values at this time.'
     )
   );
 }
@@ -61,13 +66,25 @@ function getWebpackAliases(options = {}) {
     return {};
   }
 
-  const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
+  // const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
 
-  if (path.relative(paths.appPath, baseUrlResolved) === '') {
-    return {
-      src: paths.appSrc,
-    };
-  }
+  // if (path.relative(paths.appPath, baseUrlResolved) === '') {
+  //   return {
+  //     src: paths.appSrc,
+  //   };
+  // }
+
+  let resultAlias = { src: paths.appSrc }
+
+  return Object.assign({}, resultAlias,
+    Object.keys(options.paths).reduce(
+      (obj, alias) => {
+        obj[removeWildcardPart(alias)] =
+          options.paths[alias].map(removeWildcardPart)[0]
+        return obj
+      }, {}
+    )
+  )
 }
 
 /**
@@ -82,13 +99,26 @@ function getJestAliases(options = {}) {
     return {};
   }
 
-  const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
+  // const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
 
-  if (path.relative(paths.appPath, baseUrlResolved) === '') {
-    return {
-      '^src/(.*)$': '<rootDir>/src/$1',
-    };
-  }
+  // if (path.relative(paths.appPath, baseUrlResolved) === '') {
+  // 	return {
+  // 		'^src/(.*)$': '<rootDir>/src/$1',
+  // 	};
+  // }
+
+  let resultAlias = { '^src/(.*)$': '<rootDir>/src/$1' }
+
+  return Object.assign({}, resultAlias,
+    Object.keys(options.paths).reduce(
+      (obj, alias) => {
+        obj[`^${removeWildcardPart(alias)}(.*)$`] =
+          options.paths[alias]
+            .map(p => `<rootDir>/src/${removeWildcardPart(p)}/$1`)
+        return obj
+      }, {}
+    )
+  )
 }
 
 function getModules() {
