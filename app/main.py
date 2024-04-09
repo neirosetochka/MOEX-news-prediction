@@ -100,7 +100,7 @@ def do_predict(request: Request, body: InferenceInput):
     )
 
 
-@app.get("/about")
+@app.get("/api/v1/about")
 def show_about():
     """
     Get deployment information, for debugging
