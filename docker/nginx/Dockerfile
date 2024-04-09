@@ -4,7 +4,6 @@ FROM node:latest as build_frontend
 
 WORKDIR /app
 
-#COPY ./frontend/package.json ./frontend/package-lock.json /usr/src/app/
 
 COPY ./frontend .
 RUN npm install
