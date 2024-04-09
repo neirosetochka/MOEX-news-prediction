@@ -20,10 +20,9 @@ app = FastAPI(
     terms_of_service=None,
     contact=None,
     license_info=None,
-    docs_url='/api/docs',
-    redoc_url='/api/redoc',
-    openapi_url='/api/openapi.json'
-
+    docs_url="/api/docs",
+    redoc_url="/api/redoc",
+    openapi_url="/api/openapi.json",
 )
 
 # TODO change
