@@ -1,28 +1,25 @@
 import { HttpMethod } from "@data/enums"
 
-
 var headers = {
     "Content-Type": "application/json; charset=utf-8",
-    // "Access-Control-Allow-Origin": "no-cors"
+    // "X-Requested-With": "XmlHttpRequest",
+    // "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+    // "Access-Control-Allow-Headers": "x-requested-with, Content-Type, origin, authorization, accept, x-access-token",
     "Access-Control-Allow-Origin": "*"
+    // "Access-Control-Allow-Origin": "no-cors"
 }
-
-
 
 export default async function Fetch({ action, method, body }) {
 
-    // var url = `${process.env.REACT_APP_SERVER_URL}${action}`
-
     var url = `http://92.255.77.65:80/${action}`
-    // url = `http://92.255.77.65/${action}`
     var data
 
     console.log(action, method)
 
     if (method === HttpMethod.GET) {
         data = await fetch(url, {
+            mode: "no-cors",
             method: "GET",
-            credentials: "same-origin",
             headers: headers
         })
             .then((response) => response.json())
@@ -40,8 +37,8 @@ export default async function Fetch({ action, method, body }) {
 
         console.log(headers)
         data = await fetch(url, {
+            mode: "no-cors",
             method: method,
-            credentials: "same-origin",
             headers: headers,
             body: body ? JSON.stringify(body) : ""
         })
