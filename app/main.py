@@ -34,7 +34,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# TODO add frontend and nginx
 
 
 app.add_exception_handler(RequestValidationError, validation_exception_handler)
