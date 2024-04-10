@@ -10,7 +10,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from model import Model
 from predict import predict
 from config import CONFIG
-from exception_handler import validation_exception_handler, python_exception_handler
 from schema import InferenceResponse, InferenceInput, InferenceOutput, ErrorResponse
 
 app = FastAPI(
@@ -33,10 +32,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-app.add_exception_handler(RequestValidationError, validation_exception_handler)
-app.add_exception_handler(Exception, python_exception_handler)
 
 
 @app.on_event("startup")
