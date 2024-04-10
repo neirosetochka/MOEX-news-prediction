@@ -12,14 +12,11 @@ export default function App() {
     var [predict, setPredict] = useState(0)
 
     async function getPredict(date) {
-
-        console.log(date)
-
-        var data = await Fetch({ action: "api/v1/predict/", method: HttpMethod.GET })
+        var data = await Fetch({ action: "api/v1/predict/", method: HttpMethod.POST })
 
         if (data && data.ok) {
             // console.log(data)
-            setPredict(data.predict)
+            // setPredict(data.predict)
         }
         setPredict(Math.random())
     }

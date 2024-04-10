@@ -1,16 +1,27 @@
 import { HttpMethod } from "@data/enums"
 
+
+const headers = {
+    "Content-Type": "application/json; charset=utf-8",
+    "Access-Control-Allow-Origin": "*"
+}
+
+
+
 export default async function Fetch({ action, method, body }) {
 
-    var url = `${process.env.REACT_APP_SERVER_URL}${action}`
+    // var url = `${process.env.REACT_APP_SERVER_URL}${action}`
+
+    var url = `http://92.255.77.65:80/${action}`
+    // url = `http://92.255.77.65/${action}`
+
+    console.log(action, method)
 
     if (method === HttpMethod.GET) {
         var data = await fetch(url, {
             method: "GET",
             credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-            }
+            headers: headers
         })
             .then((response) => response.json())
             .then((data) => {
@@ -24,13 +35,13 @@ export default async function Fetch({ action, method, body }) {
         return data
 
     } else {
+
+        console.log(headers)
         var data = await fetch(url, {
             method: method,
             credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-            },
-            body: body ? JSON.stringify(body) : "",
+            headers: headers,
+            body: body ? JSON.stringify(body) : ""
         })
             .then((response) => response.json())
             .then((data) => {

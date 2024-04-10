@@ -13,8 +13,8 @@ export default function PredictForm({ func }) {
 
     return (
         <>
-            <Form onSubmit={e => callFunc(e)}>
-                <Form.Group className="mb-3" controlId="formGroupEmail">
+            <Form formAction="POST" onSubmit={e => callFunc(e)}>
+                <Form.Group className="mb-3">
                     <InputGroup className="mb-3">
                         <Form.Control
                             type="date"
