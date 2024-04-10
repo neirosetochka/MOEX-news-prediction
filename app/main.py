@@ -35,7 +35,6 @@ app.add_middleware(
 )
 
 
-
 app.add_exception_handler(RequestValidationError, validation_exception_handler)
 app.add_exception_handler(Exception, python_exception_handler)
 
