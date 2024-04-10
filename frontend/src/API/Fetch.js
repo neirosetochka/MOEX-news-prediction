@@ -1,8 +1,9 @@
 import { HttpMethod } from "@data/enums"
 
 
-const headers = {
+var headers = {
     "Content-Type": "application/json; charset=utf-8",
+    // "Access-Control-Allow-Origin": "no-cors"
     "Access-Control-Allow-Origin": "*"
 }
 
@@ -14,11 +15,12 @@ export default async function Fetch({ action, method, body }) {
 
     var url = `http://92.255.77.65:80/${action}`
     // url = `http://92.255.77.65/${action}`
+    var data
 
     console.log(action, method)
 
     if (method === HttpMethod.GET) {
-        var data = await fetch(url, {
+        data = await fetch(url, {
             method: "GET",
             credentials: "same-origin",
             headers: headers
@@ -37,7 +39,7 @@ export default async function Fetch({ action, method, body }) {
     } else {
 
         console.log(headers)
-        var data = await fetch(url, {
+        data = await fetch(url, {
             method: method,
             credentials: "same-origin",
             headers: headers,
