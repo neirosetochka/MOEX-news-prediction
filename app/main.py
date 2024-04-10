@@ -4,7 +4,6 @@ import sys
 import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.logger import logger
-from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 
 from model import Model
