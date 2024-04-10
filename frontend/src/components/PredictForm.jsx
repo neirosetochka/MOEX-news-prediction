@@ -3,12 +3,13 @@ import { Button, Form, InputGroup } from "react-bootstrap"
 
 export default function PredictForm({ func }) {
 
-    var [date, setDate] = useState(undefined)
+    var [date, setDate] = useState("")
 
     async function callFunc(event) {
         await event.preventDefault()
-        var date_obj = Date.parse(date)
-        return await func(date_obj)
+        if (date) {
+            return await func(date)
+        }
     }
 
     return (
@@ -18,7 +19,7 @@ export default function PredictForm({ func }) {
                     <InputGroup className="mb-3">
                         <Form.Control
                             type="date"
-                            onChange={e => setDate(e.target.value)}
+                            onChange={e => setDate((prev) => e.target.value)}
                         />
                         <Button
                             variant="outline-secondary"

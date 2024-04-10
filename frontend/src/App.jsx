@@ -9,16 +9,18 @@ import PredictForm from "components/PredictForm"
 
 export default function App() {
 
-    var [predict, setPredict] = useState(0)
+    var [predict, setPredict] = useState("")
 
     async function getPredict(date) {
-        var data = await Fetch({ action: "api/v1/predict/", method: HttpMethod.POST })
+        var body = { 'data': date }
+        var response = await Fetch({ action: "api/v1/test/", method: HttpMethod.POST, body: body })
+        // var data = await Fetch({ action: "api/v1/test/", method: HttpMethod.GET })
 
-        if (data && data.ok) {
-            // console.log(data)
-            // setPredict(data.predict)
+        console.log(response)
+
+        if (response && response.data) {
+            setPredict(response.data)
         }
-        setPredict(Math.random())
     }
 
     return (
@@ -32,7 +34,7 @@ export default function App() {
             <br />
             <br />
 
-            {predict > 0 &&
+            {predict &&
                 <Row className="Row green text-large">
                     {predict}
                 </Row>
