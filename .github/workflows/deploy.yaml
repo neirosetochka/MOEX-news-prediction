@@ -1,5 +1,3 @@
-
-
 on:
   workflow_run:
     workflows: ["Build and Push to Docker Hub"]
@@ -10,13 +8,19 @@ on:
 jobs:
   run_pull:
     name: run pull
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
     runs-on: ubuntu-latest
     
     steps:
     - name: install ssh keys
-      uses: webfactory/ssh-agent@v0.9.0
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      run: cd ${{ secrets.WORK_DIR }} && docker-compose stop && docker rm $(docker ps -aq) && docker rmi $(docker image ls -q) && docker-compose pull && docker-compose up -d && exit
+      run: |
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+    - name: connect and pull
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && docker-compose stop && docker rm $(docker ps -aq) && docker rmi $(docker image ls -q) && docker-compose pull && docker-compose up -d && exit"
     - name: cleanup
       run: rm -rf ~/.ssh
+
