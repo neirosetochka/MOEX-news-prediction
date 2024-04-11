@@ -6,7 +6,7 @@ import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.logger import logger
 from fastapi.middleware.cors import CORSMiddleware
-
+from tests import api_test
 from model import Model
 from predict import predict
 from config import CONFIG
@@ -16,7 +16,6 @@ from schema import (
     InferenceOutput,
     ErrorResponse,
 )
-from tests import test_get_plot, test_post_date
 
 
 @asynccontextmanager
@@ -110,8 +109,7 @@ def show_about():
 
 
 ################ Test views #################
-app.post("/api/v1/test_post_date")(test_post_date)
-app.get("/api/v1/test_get_plot")(test_get_plot)
+app.include_router(api_test, prefix="/api/v1", tags=["tests"])
 #############################################
 
 if __name__ == "__main__":

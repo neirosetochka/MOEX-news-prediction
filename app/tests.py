@@ -1,12 +1,18 @@
 import random
 
 from schema import TestInput
+from fastapi import APIRouter
 
 
+api_test = APIRouter(tags=["test"])
+
+
+@api_test.get("/test_get_plot")
 def test_post_date(data: TestInput):
     return data
 
 
+@api_test.post("/test_post_date")
 def test_get_plot() -> dict[str, list[int]]:
     arr_len = 100
     x = [i for i in range(arr_len)]
