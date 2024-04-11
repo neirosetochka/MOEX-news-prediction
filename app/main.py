@@ -15,8 +15,8 @@ from schema import (
     InferenceInput,
     InferenceOutput,
     ErrorResponse,
-    TestInput,
 )
+from tests import test_get_plot, test_post_date
 
 
 @asynccontextmanager
@@ -81,7 +81,6 @@ def do_predict(request: Request, body: InferenceInput):
     y = list(map(lambda v: round(v, CONFIG["ROUND_DIGIT"]), y))
 
     # prepare json for returning
-
     logger.info(f"results: {y}")
 
     return InferenceResponse(
@@ -110,10 +109,10 @@ def show_about():
     }
 
 
-@app.post("/api/v1/test")
-def test(data: TestInput):
-    return data
-
+################ Test views #################
+app.post("/api/v1/test_post_date")(test_post_date)
+app.get("/api/v1/test_get_plot")(test_get_plot)
+#############################################
 
 if __name__ == "__main__":
     uvicorn.run(
