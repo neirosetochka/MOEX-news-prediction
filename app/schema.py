@@ -49,3 +49,7 @@ class ErrorResponse(BaseModel):
 
 class InferenceResponse(BaseModel):
     data: InferenceOutput
+
+
+class TestInput(BaseModel):
+    date: str

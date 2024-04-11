@@ -1,5 +1,6 @@
 import os
 import sys
+from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI, Request
@@ -10,8 +11,29 @@ from fastapi.middleware.cors import CORSMiddleware
 from model import Model
 from predict import predict
 from config import CONFIG
-from exception_handler import validation_exception_handler, python_exception_handler
-from schema import InferenceResponse, InferenceInput, InferenceOutput, ErrorResponse
+from schema import (
+    InferenceResponse,
+    InferenceInput,
+    InferenceOutput,
+    ErrorResponse,
+    TestInput,
+)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Initialize FastAPI and add variables
+    """
+    logger.info(f"Running envirnoment: {CONFIG['ENV']}")
+
+    # Initialize the pytorch model
+    model = Model()
+
+    # add model and other preprocess tools too app state
+    app.package = {"model": model}
+    yield
+
 
 app = FastAPI(
     title="ML Model",
@@ -23,15 +45,8 @@ app = FastAPI(
     docs_url="/api/docs",
     redoc_url="/api/redoc",
     openapi_url="/api/openapi.json",
+    lifespan=lifespan,
 )
-
-# TODO change
-origins = [
-    "http://localhost.tiangolo.com",
-    "https://localhost.tiangolo.com",
-    "http://localhost",
-    "http://localhost:8080",
-]
 
 app.add_middleware(
     CORSMiddleware,
@@ -40,27 +55,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# TODO add frontend and nginx
-
-
-app.add_exception_handler(RequestValidationError, validation_exception_handler)
-app.add_exception_handler(Exception, python_exception_handler)
-
-
-@app.on_event("startup")
-async def startup_event():
-    """
-    Initialize FastAPI and add variables
-    """
-
-    logger.info("Running envirnoment: {}".format(CONFIG["ENV"]))
-
-    # Initialize the pytorch model
-    model = Model()
-
-    # add model and other preprocess tools too app state
-    app.package = {"model": model}
 
 
 @app.post(
@@ -117,10 +111,8 @@ def show_about():
     }
 
 
-@app.post(
-    "/api/v1/test",
-)
-def test(data: dict):
+@app.post("/api/v1/test")
+def test(data: TestInput):
     return data
 
 

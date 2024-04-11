@@ -7,9 +7,6 @@
             ],
             "@data/*": [
                 "data/*"
-            ],
-            "@images/*": [
-                "images/*"
             ]
         }
     },

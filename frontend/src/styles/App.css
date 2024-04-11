@@ -8,3 +8,27 @@ body {
     padding: 0 150px;
     font-family: sans-serif;
 }
+
+.text-large {
+    font-size: x-large;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.green {
+    background-color: rgb(129, 235, 165);
+    border: 3px solid rgb(78, 215, 124);
+}
+
+.red {
+    background-color: rgb(243, 164, 150);
+    border: 3px solid rgb(245, 124, 102);
+}
+
+.Row {
+    padding: 20px;
+    border-radius: 10px;
+    justify-content: center;
+}
