@@ -1,0 +1,26 @@
+on:
+  workflow_run:
+    workflows: ["Build and Push to Docker Hub"]
+    types:
+      - completed
+
+  
+jobs:
+  run_pull:
+    name: run pull
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port:  22
+        script: cd test && docker-compose stop && docker rm $(docker ps -aq) && docker rmi $(docker image ls -q) && docker-compose pull && docker-compose up -d && exit
+

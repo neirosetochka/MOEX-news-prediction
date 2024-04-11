@@ -1,5 +1,11 @@
 import "./styles/App.css"
-import "./styles/theme.css"
+import "bootstrap/dist/css/bootstrap.min.css"
+
+import { useState } from "react"
+import { Row } from "react-bootstrap"
+import { HttpMethod } from "@data/enums"
+import Fetch from "@API/Fetch"
+import PredictForm from "components/PredictForm"
 
 export default function App() {
 
@@ -43,5 +49,4 @@ export default function App() {
             }
         </div>
     )
-
 }

@@ -26,7 +26,6 @@ class InferenceInput(BaseModel):
     time_series_data: TimeSeriesDataList
     news_data: NewsDataList
     confidence_level: float = Field(title="Confidence Level", ge=0, le=1)
-    date_to_predict: datetime
 
     def __repr__(self):
         return f"test cl {self.confidence_level}"
