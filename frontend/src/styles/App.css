@@ -17,12 +17,12 @@ body {
     text-align: center;
 }
 
-.green {
+.text-green {
     background-color: rgb(129, 235, 165);
     border: 3px solid rgb(78, 215, 124);
 }
 
-.red {
+.text-red {
     background-color: rgb(243, 164, 150);
     border: 3px solid rgb(245, 124, 102);
 }
