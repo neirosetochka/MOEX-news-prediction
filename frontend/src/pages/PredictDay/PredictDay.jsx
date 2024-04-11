@@ -26,12 +26,7 @@ export default function PredictDay() {
         } else {
             setSuccess(false)
             setError("Ошибка")
-            setPredict({
-                dates: [],
-                x: [],
-                y_pred: [],
-                y_true: []
-            })
+            setPredict(undefined)
         }
     }
 
