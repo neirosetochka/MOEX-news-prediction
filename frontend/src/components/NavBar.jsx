@@ -1,3 +1,4 @@
+import "@components/styles/NavBar.css"
 import img from "@images/yandex-logo.jpg"
 
 import { Link } from "react-router-dom"
@@ -12,17 +13,7 @@ export default function NavBar() {
                     <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3">
                         <Container fluid>
                             <Navbar.Brand as={Link} to="/">
-                                <img
-                                    id="home-icon"
-                                    src={img}
-                                    width="40px"
-                                    style={
-                                        {
-                                            margin: 10 + "px",
-                                            borderRadius: 50 + "%"
-                                        }
-                                    }
-                                />
+                                <img id="home-icon" src={img} />
                                 Команда А
                             </Navbar.Brand>
 
