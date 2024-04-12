@@ -149,14 +149,9 @@ def do_predict_interval():
     responses={422: {"model": ErrorResponse}, 500: {"model": ErrorResponse}},
 )
 def do_predict_day(data: ModelDayInput):
-    """
-    TODO: Perform prediction on input data
-    """
-    from random import uniform
-
     y = predict(app.package, data)
     logger.info("API predict called")
-    return {"data": uniform(1.0, 100.0), "moex": y}
+    return {"data": y}
 
 
 if __name__ == "__main__":
