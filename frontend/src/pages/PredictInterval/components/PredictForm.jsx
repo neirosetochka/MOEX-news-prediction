@@ -5,11 +5,11 @@ import { Button, Col, Row, Form, FloatingLabel } from "react-bootstrap"
 export default function PredictForm({ getPredict, error, setError, success, setSuccess }) {
 
     var [buttonColor, setButtonColor] = useState("secondary")
-    var [form, setForm] = useState({ start: "", end: "" })
+    var [form, setForm] = useState({ left: "", right: "" })
 
     async function callFunc(event) {
         await event.preventDefault()
-        if (form.start && form.end) {
+        if (form.left && form.right) {
             setError("")
             return await getPredict(form)
         } else {
@@ -39,7 +39,7 @@ export default function PredictForm({ getPredict, error, setError, success, setS
                     <FloatingLabel label="начальная дата" controlId="floatingInput" className="mb-3">
                         <Form.Control
                             type="date"
-                            onChange={e => setForm({ ...form, start: e.target.value })}
+                            onChange={e => setForm({ ...form, left: e.target.value })}
                         />
                     </FloatingLabel>
                 </Col>
@@ -47,7 +47,7 @@ export default function PredictForm({ getPredict, error, setError, success, setS
                     <FloatingLabel label="конечная дата" controlId="floatingInput" className="mb-3">
                         <Form.Control
                             type="date"
-                            onChange={e => setForm({ ...form, end: e.target.value })}
+                            onChange={e => setForm({ ...form, right: e.target.value })}
                         />
                     </FloatingLabel>
                 </Col>

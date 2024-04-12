@@ -20,13 +20,12 @@ export default function PredictInterval() {
     })
 
     async function getPredict(date) {
-        var body = { date: date }
-        var response = await Fetch({ action: "api/v1/predict_interval/", method: HttpMethod.POST, body: body })
+        var response = await Fetch({ action: "api/v1/predict_interval/", method: HttpMethod.POST, body: date })
 
-        if (response && response.data) {
+        if (response) {
             setError("")
             setSuccess(true)
-            setPredict(response.data)
+            setPredict(response)
         } else {
             setSuccess(false)
             setError("Ошибка")
