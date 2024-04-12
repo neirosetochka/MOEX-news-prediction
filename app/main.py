@@ -10,11 +10,14 @@ from tests import api_test
 from model import Model
 from predict import predict
 from config import CONFIG
+
+
 from schema import (
     InferenceResponse,
     InferenceInput,
     InferenceOutput,
     ErrorResponse,
+    ModelDayInput,
 )
 
 
@@ -55,41 +58,41 @@ app.add_middleware(
 )
 
 
-@app.post(
-    "/api/v1/predict",
-    response_model=InferenceResponse,
-    responses={422: {"model": ErrorResponse}, 500: {"model": ErrorResponse}},
-)
-def do_predict(request: Request, body: InferenceInput):
-    """
-    Perform prediction on input data
-    """
+# @app.post(
+#     "/api/v1/predict_day",
+#     response_model=InferenceResponse,
+#     responses={422: {"model": ErrorResponse}, 500: {"model": ErrorResponse}},
+# )
+# def do_predict_day(request: Request, body: InferenceInput):
+#     """
+#     Perform prediction on input data
+#     """
 
-    logger.info("API predict called")
-    logger.info(f"input: {body}")
+#     logger.info("API predict called")
+#     logger.info(f"input: {body}")
 
-    # prepare input data
-    X = body
+#     # prepare input data
+#     X = body
 
-    # run model inference
-    y = predict(app.package, [X])
-    # generate prediction based on probablity
-    pred = ["setosa", "versicolor", "virginica"][y.index(max(y))]
+#     # run model inference
+#     y = predict(app.package, [X])
+#     # generate prediction based on probablity
+#     pred = ["setosa", "versicolor", "virginica"][y.index(max(y))]
 
-    # round probablities for json
-    y = list(map(lambda v: round(v, CONFIG["ROUND_DIGIT"]), y))
+#     # round probablities for json
+#     y = list(map(lambda v: round(v, CONFIG["ROUND_DIGIT"]), y))
 
-    # prepare json for returning
-    logger.info(f"results: {y}")
+#     # prepare json for returning
+#     logger.info(f"results: {y}")
 
-    return InferenceResponse(
-        data=InferenceOutput(
-            predicted_value=y[0],
-            predicted_confidence_interval_lower_bound=y[1],
-            predicted_confidence_interval_upper_bound=y[2],
-            text=pred,
-        )
-    )
+#     return InferenceResponse(
+#         data=InferenceOutput(
+#             predicted_value=y[0],
+#             predicted_confidence_interval_lower_bound=y[1],
+#             predicted_confidence_interval_upper_bound=y[2],
+#             text=pred,
+#         )
+#     )
 
 
 @app.get("/api/v1/about")
@@ -111,6 +114,52 @@ def show_about():
 ################ Test views #################
 app.include_router(api_test, prefix="/api/v1", tags=["tests"])
 #############################################
+
+
+@app.post("/api/v1/predict_interval")
+def do_predict_interval():
+    """
+    TODO: Perform prediction on input data
+    """
+    from random import uniform
+
+    return {
+        "data": {
+            "dates": [
+                "2020-01-01",
+                "2020-01-02",
+                "2020-01-03",
+                "2020-01-04",
+                "2020-01-05",
+                "2020-01-06",
+            ],
+            "x": [1, 2, 3, 4, 5, 6],
+            "y_pred": [
+                1.8,
+                2.6,
+                uniform(1.3, 2.2),
+                uniform(2.2, 3.8),
+                uniform(3.3, 3.5),
+                uniform(1.0, 1.3),
+            ],
+            "y_true": [2, 3],
+        }
+    }
+
+
+@app.post(
+    "/api/v1/predict_day",
+    responses={422: {"model": ErrorResponse}, 500: {"model": ErrorResponse}},
+)
+def do_predict_day(data: ModelDayInput):
+    """
+    TODO: Perform prediction on input data
+    """
+    from random import uniform
+
+    logger.info("API predict called")
+    return {"data": uniform(1.0, 100.0)}
+
 
 if __name__ == "__main__":
     uvicorn.run(

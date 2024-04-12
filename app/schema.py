@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from datetime import datetime
+from datetime import datetime, date
 
 
 class NewsData(BaseModel):
@@ -50,5 +50,49 @@ class InferenceResponse(BaseModel):
     data: InferenceOutput
 
 
+########
+########
+########
+################
+########
+########
+################
+########
+########
+################
+########
+########
+########
+
+
 class TestInput(BaseModel):
+    """Test schema"""
+
     date: str
+
+
+class ModelDayInput(BaseModel):
+    # Necessary
+    CAPITALIZATION: float
+    CLOSE: float
+    DIVISOR: float
+    HIGH: float
+    LOW: float
+    OPEN: float
+    TRADEDATE: date
+    finance: str
+    economic: str
+    politic: str
+
+    # Optional
+    NAME: str
+    SHORTNAME: str
+    SECID: str
+    BOARDID: str
+    DURATION: str
+    YIELD: str
+    DECIMALS: str
+    CURRENCYID: str
+    VOLUME: str
+    TRADINGSESSION: str
+    VALUE: str
