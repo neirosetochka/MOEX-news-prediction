@@ -40,7 +40,7 @@ class Model:
             if v in self.data_cashe[k]:
                 val += self.data_cashe[k][v]
             else:
-                r = (random.random() - 0.3) * 6
+                r = (random.random() - 0.3) * 10
                 self.data_cashe[k][v] = r
                 val += r
         return val
