@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/api/Dockerfile
-    image: lmcyber/stud_camp_backend:0.1
+    image: lmcyber/stud_camp_backend:0.2
 
     ports:
       - 8080:8080
@@ -16,7 +16,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
-    image: lmcyber/stud_camp_nginx:0.1
+    image: lmcyber/stud_camp_nginx:0.2
 
     ports:
       - 80:80
