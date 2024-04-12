@@ -11,7 +11,6 @@ export default function PredictInterval() {
 
     var [error, setError] = useState("")
     var [success, setSuccess] = useState(false)
-
     var [predict, setPredict] = useState({
         dates: [],
         x: [],
@@ -23,9 +22,14 @@ export default function PredictInterval() {
         var response = await Fetch({ action: "api/v1/predict_interval/", method: HttpMethod.POST, body: date })
 
         if (response) {
-            setError("")
-            setSuccess(true)
-            setPredict(response)
+            if (response.dates.length > 0) {
+                setError("")
+                setSuccess(true)
+                setPredict(response)
+            } else {
+                setError("Нет данных")
+                setSuccess(false)
+            }
         } else {
             setSuccess(false)
             setError("Ошибка")
@@ -90,7 +94,6 @@ export default function PredictInterval() {
                         responsive: true,
                         useResizeHandler: true,
                         autosize: true,
-                        // margin: { "l": 0, "r": 0, "b": 0, "t": 0 },
                         xaxis: {
                             title: "дата",
                             type: "category",
@@ -101,7 +104,6 @@ export default function PredictInterval() {
                             title: "стоимость",
                             zeroline: false,
                             showline: false,
-                            // range: [-10, 100],
                         },
                     }}
                     style={{ width: "100%", height: 600 }}
