@@ -13,7 +13,6 @@ from config import CONFIG
 
 
 from schema import ErrorResponse, ModelDayInput, IntervalResponce, IntervalRequest
-
 import pandas as pd
 
 
@@ -27,8 +26,8 @@ async def lifespan(app: FastAPI):
     # Initialize the pytorch model
     model = Model()
 
-    df = pd.read_csv("./model_ser/pred.csv")
-    df["date"] = pd.to_datetime(df["date"])
+    df = pd.read_csv("./app/model_ser/pred.csv")
+    df["date"] = pd.to_datetime(df["date"]).dt.date
     # add model and other preprocess tools too app state
     app.package = {"model": model, "predict": df}
     yield
@@ -117,11 +116,8 @@ app.include_router(api_test, prefix="/api/v1", tags=["tests"])
 @app.post("/api/v1/predict_interval")
 def do_predict_interval(data: IntervalRequest):
     df = app.package["predict"]
-    filter_df = df[
-        df["date"]
-        >= pd.to_datetime(data.left) & df["date"]
-        <= pd.to_datetime(data.right)
-    ]
+    filter_df = df[(df["date"] >= data.left)]
+    filter_df = filter_df[(filter_df["date"] <= data.right)]
     length = [i + 1 for i in range(len(filter_df))]
 
     return IntervalResponce(
