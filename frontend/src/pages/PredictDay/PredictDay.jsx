@@ -13,11 +13,7 @@ export default function PredictDay() {
     var [predict, setPredict] = useState(undefined)
 
     async function getPredict(date) {
-        var body = { date: date }
-        var response = await Fetch({ action: "api/v1/predict_day/", method: HttpMethod.POST, body: body })
-
-        // TODO: remove
-        response = { data: 10 }
+        var response = await Fetch({ action: "api/v1/predict_day/", method: HttpMethod.POST, body: date })
 
         if (response && response.data) {
             setError("")

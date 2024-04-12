@@ -23,16 +23,6 @@ export default function PredictInterval() {
         var body = { date: date }
         var response = await Fetch({ action: "api/v1/predict_interval/", method: HttpMethod.POST, body: body })
 
-        // TODO: remove
-        response = {
-            data: {
-                dates: ["2020-01-01", "2020-01-02", "2020-01-03", "2020-01-04", "2020-01-05", "2020-01-06"],
-                x: [1, 2, 3, 4, 5, 6],
-                y_pred: [1.8, 2.6, 3, 1, 2, 3],
-                y_true: [2, 3]
-            }
-        }
-
         if (response && response.data) {
             setError("")
             setSuccess(true)

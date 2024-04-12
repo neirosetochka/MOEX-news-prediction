@@ -34,6 +34,7 @@ export default function PredictForm({ getPredict, error, setError, success, setS
 
     async function callFunc(event) {
         await event.preventDefault()
+
         if (form.CAPITALIZATION && form.CLOSE && form.DIVISOR && form.HIGH && form.LOW && form.OPEN && form.TRADEDATE && form.finance && form.economic && form.politic) {
             setError("")
             return await getPredict(form)
@@ -66,7 +67,7 @@ export default function PredictForm({ getPredict, error, setError, success, setS
                             type="number"
                             step="0.01"
                             placeholder="CAPITALIZATION"
-                            onChange={e => setForm({ ...form, CAPITALIZATION: e.target.value })}
+                            onChange={e => setForm({ ...form, CAPITALIZATION: Number.parseFloat(e.target.value) })}
                         />
                     </FloatingLabel>
                 </Col>
@@ -76,7 +77,7 @@ export default function PredictForm({ getPredict, error, setError, success, setS
                             type="number"
                             step="0.01"
                             placeholder="OPEN"
-                            onChange={e => setForm({ ...form, OPEN: e.target.value })}
+                            onChange={e => setForm({ ...form, OPEN: Number.parseFloat(e.target.value) })}
                         />
                     </FloatingLabel>
                 </Col>
@@ -86,7 +87,7 @@ export default function PredictForm({ getPredict, error, setError, success, setS
                             type="number"
                             step="0.01"
                             placeholder="CLOSE"
-                            onChange={e => setForm({ ...form, CLOSE: e.target.value })}
+                            onChange={e => setForm({ ...form, CLOSE: Number.parseFloat(e.target.value) })}
                         />
                     </FloatingLabel>
                 </Col>
@@ -99,7 +100,7 @@ export default function PredictForm({ getPredict, error, setError, success, setS
                             type="number"
                             step="0.01"
                             placeholder="HIGH"
-                            onChange={e => setForm({ ...form, HIGH: e.target.value })}
+                            onChange={e => setForm({ ...form, HIGH: Number.parseFloat(e.target.value) })}
                         />
                     </FloatingLabel>
                 </Col>
@@ -109,7 +110,7 @@ export default function PredictForm({ getPredict, error, setError, success, setS
                             type="number"
                             step="0.01"
                             placeholder="LOW"
-                            onChange={e => setForm({ ...form, LOW: e.target.value })}
+                            onChange={e => setForm({ ...form, LOW: Number.parseFloat(e.target.value) })}
                         />
                     </FloatingLabel>
                 </Col>
@@ -122,7 +123,7 @@ export default function PredictForm({ getPredict, error, setError, success, setS
                             type="number"
                             step="0.01"
                             placeholder="DIVISOR"
-                            onChange={e => setForm({ ...form, DIVISOR: e.target.value })}
+                            onChange={e => setForm({ ...form, DIVISOR: Number.parseFloat(e.target.value) })}
                         />
                     </FloatingLabel>
                 </Col>
