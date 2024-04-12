@@ -3,7 +3,7 @@ import sys
 from contextlib import asynccontextmanager
 
 import uvicorn
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.logger import logger
 from fastapi.middleware.cors import CORSMiddleware
 from tests import api_test
@@ -13,9 +13,6 @@ from config import CONFIG
 
 
 from schema import (
-    InferenceResponse,
-    InferenceInput,
-    InferenceOutput,
     ErrorResponse,
     ModelDayInput,
 )
@@ -157,8 +154,9 @@ def do_predict_day(data: ModelDayInput):
     """
     from random import uniform
 
+    y = predict(app.package, data)
     logger.info("API predict called")
-    return {"data": uniform(1.0, 100.0)}
+    return {"data": uniform(1.0, 100.0), "moex": y}
 
 
 if __name__ == "__main__":
