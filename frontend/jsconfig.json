@@ -7,6 +7,15 @@
             ],
             "@data/*": [
                 "data/*"
+            ],
+            "@pages/*": [
+                "pages/*"
+            ],
+            "@components/*": [
+                "components/*"
+            ],
+            "@images/*": [
+                "images/*"
             ]
         }
     },

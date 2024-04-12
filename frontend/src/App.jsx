@@ -1,23 +1,34 @@
 import "./styles/App.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 
-import Predict from "components/Predict"
-import ModelPlot from "components/ModelPlot"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+
+import { PublicRoutes } from "@data/routes"
+import Error from "@pages/Error/Error"
+import NavBar from "@components/NavBar"
 
 
 export default function App() {
+
     return (
-        <div className="App">
+        <BrowserRouter>
+            <div className="App">
+                <NavBar />
 
-            <br />
+                <br />
 
-            <Predict />
-
-            <br />
-            <br />
-            <br />
-
-            <ModelPlot />
-        </div>
+                <Routes>
+                    {PublicRoutes.map((route) =>
+                        <Route
+                            key={route.path}
+                            path={route.path}
+                            errorElement={<Error />}
+                            element={route.element}
+                            exact
+                        />
+                    )}
+                </Routes>
+            </div>
+        </BrowserRouter>
     )
 }
