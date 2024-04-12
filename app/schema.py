@@ -50,6 +50,18 @@ class InferenceResponse(BaseModel):
     data: InferenceOutput
 
 
+class IntervalRequest(BaseModel):
+    left: date
+    right: date
+
+
+class IntervalResponce(BaseModel):
+    dates: list[date]
+    x: list[int]
+    y_pred: list[float]
+    y_true: list[float]
+
+
 ########
 ########
 ########

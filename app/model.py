@@ -1,14 +1,12 @@
 from schema import ModelDayInput
 from functools import lru_cache
 from collections import defaultdict
+import random
 
 
 @lru_cache(maxsize=None)
 def zatchka(x):
     return x
-
-
-import random
 
 
 class Model:

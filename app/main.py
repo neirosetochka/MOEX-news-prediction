@@ -12,10 +12,9 @@ from predict import predict
 from config import CONFIG
 
 
-from schema import (
-    ErrorResponse,
-    ModelDayInput,
-)
+from schema import ErrorResponse, ModelDayInput, IntervalResponce, IntervalRequest
+
+import pandas as pd
 
 
 @asynccontextmanager
@@ -28,8 +27,10 @@ async def lifespan(app: FastAPI):
     # Initialize the pytorch model
     model = Model()
 
+    df = pd.read_csv("./model_ser/pred.csv")
+    df["date"] = pd.to_datetime(df["date"])
     # add model and other preprocess tools too app state
-    app.package = {"model": model}
+    app.package = {"model": model, "predict": df}
     yield
 
 
@@ -114,34 +115,39 @@ app.include_router(api_test, prefix="/api/v1", tags=["tests"])
 
 
 @app.post("/api/v1/predict_interval")
-def do_predict_interval():
-    """
-    TODO: Perform prediction on input data
-    """
-    from random import uniform
+def do_predict_interval(data: IntervalRequest):
+    df = app.package["predict"]
+    filter_df = df[
+        df["date"]
+        >= pd.to_datetime(data.left) & df["date"]
+        <= pd.to_datetime(data.right)
+    ]
+    length = [i + 1 for i in range(len(filter_df))]
 
-    return {
-        "data": {
-            "dates": [
-                "2020-01-01",
-                "2020-01-02",
-                "2020-01-03",
-                "2020-01-04",
-                "2020-01-05",
-                "2020-01-06",
-            ],
-            "x": [1, 2, 3, 4, 5, 6],
-            "y_pred": [
-                1.8,
-                2.6,
-                uniform(1.3, 2.2),
-                uniform(2.2, 3.8),
-                uniform(3.3, 3.5),
-                uniform(1.0, 1.3),
-            ],
-            "y_true": [2, 3],
-        }
-    }
+    return IntervalResponce(
+        dates=filter_df["date"].tolist(),
+        x=length,
+        y_pred=filter_df["preds"].tolist(),
+        y_true=filter_df["true_y"].tolist(),
+    )
+    # return {
+    #     "data": {
+    #         "dates": [
+    #             "2020-01-01",
+    #             "2020-01-02",
+    #             "2020-01-03",
+    #             "2020-01-04",
+    #             "2020-01-05",
+    #             "2020-01-06",
+    #         ],
+    #         "x": [1, 2, 3, 4, 5, 6],
+    #         "y_pred": [
+    #             1.8,
+    #             2.6
+    #         ],
+    #         "y_true": [2, 3],
+    #     }
+    # }
 
 
 @app.post(
