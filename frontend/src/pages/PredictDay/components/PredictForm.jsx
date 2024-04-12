@@ -30,6 +30,8 @@ export default function PredictForm({ getPredict, error, setError, success, setS
         VOLUME: "",
         TRADINGSESSION: "",
         VALUE: "",
+
+        today: "",
     })
 
     async function callFunc(event) {
@@ -37,6 +39,8 @@ export default function PredictForm({ getPredict, error, setError, success, setS
 
         if (form.CAPITALIZATION && form.CLOSE && form.DIVISOR && form.HIGH && form.LOW && form.OPEN && form.TRADEDATE && form.finance && form.economic && form.politic) {
             setError("")
+            var today = new Date().toISOString().split("T")[0]
+            form.today = today
             return await getPredict(form)
         } else {
             setError("заполните форму")

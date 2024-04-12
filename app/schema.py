@@ -96,3 +96,5 @@ class ModelDayInput(BaseModel):
     VOLUME: str
     TRADINGSESSION: str
     VALUE: str
+
+    today: str
