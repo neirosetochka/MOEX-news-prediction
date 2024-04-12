@@ -30,7 +30,7 @@ export default function NavBar() {
                                 </Offcanvas.Header>
                                 <Offcanvas.Body>
                                     <Nav className="justify-content-end flex-grow-1 pe-3">
-                                        <Nav.Link as={Link} to="/predict_day/">на один день</Nav.Link>
+                                        <Nav.Link as={Link} to="/predict_day/">на сегодня</Nav.Link>
                                         <Nav.Link as={Link} to="/predict_interval/">на интервал</Nav.Link>
                                     </Nav>
                                 </Offcanvas.Body>
