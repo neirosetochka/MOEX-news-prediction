@@ -26,7 +26,7 @@ async def lifespan(app: FastAPI):
     # Initialize the pytorch model
     model = Model()
 
-    df = pd.read_csv("./app/model_ser/pred.csv")
+    df = pd.read_csv("./model_ser/pred.csv")
     df["date"] = pd.to_datetime(df["date"]).dt.date
     # add model and other preprocess tools too app state
     app.package = {"model": model, "predict": df}
