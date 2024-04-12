@@ -95,13 +95,13 @@ export default function PredictInterval() {
                         useResizeHandler: true,
                         autosize: true,
                         xaxis: {
-                            title: "дата",
+                            // title: "дата",
                             type: "category",
                             zeroline: false,
                             showline: false,
                         },
                         yaxis: {
-                            title: "стоимость",
+                            // title: "стоимость",
                             zeroline: false,
                             showline: false,
                         },
