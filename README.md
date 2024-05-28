@@ -34,4 +34,6 @@
 
 ## Дизайн
 Минималистичный интерфейс позволяет по введенным данным предсказать цену закрытия:
+<p align="center">
 <img src="https://github.com/neirosetochka/MOEX-news-prediction/assets/72963340/cb1ce6f3-eb74-4e98-b8d7-9a0f08dfb900" width=80%>
+</p>
