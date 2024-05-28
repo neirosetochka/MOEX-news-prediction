@@ -4,7 +4,7 @@
 * Есть фонды, составы портфелей которых реплицируют индекс мосбиржи (практически 1:1), соответственно, зная утром, где будет цена, вечером можно открывать короткие/длинные позиции для заработка на изменении значения индекса.
 Для бейзлайна и грамотного составления признакового пространства сначала анализировался сам временной ряд.
 <p align="center">
-<img src="https://github.com/neirosetochka/MOEX-news-prediction/assets/72963340/0ad145a6-3c18-4947-a88c-f1ed91dfdb63" width=90%> 
+<img src="https://github.com/neirosetochka/MOEX-news-prediction/assets/72963340/0ad145a6-3c18-4947-a88c-f1ed91dfdb63" width=70%> 
 </p>
 Затем строилась модель Тейла-Вейджа, которая затем использовалась для оценки качества прогнозирования.
 <p float="left">
@@ -28,5 +28,5 @@
 ## Результаты
 Модель хорошо уловила тенденцию цены индекса:
 <p align="center">
-<img src=="https://github.com/neirosetochka/MOEX-news-prediction/assets/72963340/e00ad612-10b6-43d1-81b0-e6f1d05853f4" width=100%> 
+<img src=="https://github.com/neirosetochka/MOEX-news-prediction/assets/72963340/e00ad612-10b6-43d1-81b0-e6f1d05853f4" width=80%> 
 </p>
