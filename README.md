@@ -8,7 +8,7 @@
 <p align="center">
 <img src="https://github.com/neirosetochka/MOEX-news-prediction/assets/72963340/0ad145a6-3c18-4947-a88c-f1ed91dfdb63" width=70%> 
 </p>
-Затем строилась модель Тейла-Вейджа, которая использовалась для оценки качества прогнозирования.
+Затем строилась модель Тейла-Вейджа, которая использовалась для сравнения качества прогнозирования.
 <p float="left">
 <img src="https://github.com/neirosetochka/MOEX-news-prediction/assets/72963340/6a0748ca-116e-4cc7-a6f4-cee44ccb2631" width=50% />
 <img src="https://github.com/neirosetochka/MOEX-news-prediction/assets/72963340/046f38eb-1c25-424f-b43f-c33b6feabdcf" width=40% />
