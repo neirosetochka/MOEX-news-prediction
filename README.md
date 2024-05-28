@@ -4,12 +4,12 @@
 * Есть фонды, составы портфелей которых реплицируют индекс мосбиржи (практически 1:1), соответственно, зная утром, где будет цена, вечером можно открывать короткие/длинные позиции для заработка на изменении значения индекса.
 Для бейзлайна и грамотного составления признакового пространства сначала анализировался сам временной ряд.
 <p align="center">
-<img src=="https://github.com/neirosetochka/MOEX-news-prediction/assets/72963340/e0454ed5-df05-435a-b7bf-5f2a4e3c3d67" width=60%> 
+<img src=="https://github.com/neirosetochka/MOEX-news-prediction/assets/72963340/e0454ed5-df05-435a-b7bf-5f2a4e3c3d67" width=40%> 
 </p>
 Затем строилась модель Тейла-Вейджа, которая затем использовалась для оценки качества прогнозирования.
 <p float="left">
-<img src="https://github.com/neirosetochka/MOEX-news-prediction/assets/72963340/6a0748ca-116e-4cc7-a6f4-cee44ccb2631" width=40% />
-<img src="https://github.com/neirosetochka/MOEX-news-prediction/assets/72963340/046f38eb-1c25-424f-b43f-c33b6feabdcf" width=40% />
+<img src="https://github.com/neirosetochka/MOEX-news-prediction/assets/72963340/6a0748ca-116e-4cc7-a6f4-cee44ccb2631" width=50% />
+<img src="https://github.com/neirosetochka/MOEX-news-prediction/assets/72963340/046f38eb-1c25-424f-b43f-c33b6feabdcf" width=50% />
 </p>
 
 ## Признаки
